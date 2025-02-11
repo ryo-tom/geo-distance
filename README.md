@@ -6,6 +6,20 @@ ref:
 
 - <https://geopy.readthedocs.io/en/stable/>
 
+## 📁 ディレクトリ構造
+
+```bash
+project_root/
+│── main.py               # FastAPI エントリーポイント（APIのルーティングのみ）
+│── services/
+│   ├── geolocation.py    # 住所処理（座標取得ロジック）
+│   ├── distance.py       # 距離計算ロジック
+│── models/
+│   ├── request.py        # リクエストのPydanticモデル
+│── requirements.txt      # 依存関係
+
+```
+
 ## APIの確認
 
 試しに「ディズニーランド」から「USJ」までの距離を求めてみる。
