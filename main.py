@@ -14,24 +14,21 @@ class DistanceRequest(BaseModel):
     address2: str
 
 
-def extract_municipality_lazy(address):
-    """市区町村・群レベルの住所を正規表現で抽出（最短一致）"""
-    pattern = re.compile(r"^(.*?(市|区|町|村|群))")
-    match = pattern.search(address)
+def extract_municipality_lazy(address: str) -> str:
+    """市区町村・郡レベルの住所を最短一致（lazy）で抽出"""
+    match = re.search(r"^(.*?(市|区|町|村|群))", address)
     return match.group(1) if match else None
 
 
-def extract_municipality_greedy(address):
-    """市区町村・群レベルの住所を正規表現で抽出（貪欲一致）"""
-    pattern = re.compile(r"^(.*(市|区|町|村|群))")
-    match = pattern.search(address)
+def extract_municipality_greedy(address: str) -> str:
+    """市区町村・郡レベルの住所を貪欲一致（greedy）で抽出"""
+    match = re.search(r"^(.*(市|区|町|村|群))", address)
     return match.group(1) if match else None
 
 
-def extract_prefecture(address):
+def extract_prefecture(address: str) -> str:
     """都道府県名を正規表現で抽出"""
-    pattern = re.compile(r"(東京都|北海道|大阪府|京都府|.{2,3}県)", re.UNICODE)
-    match = pattern.search(address)
+    match = re.search(r"(東京都|北海道|大阪府|京都府|.{2,3}県)", address)
     return match.group(1) if match else None
 
 
