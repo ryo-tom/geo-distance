@@ -83,8 +83,8 @@ def retry_geocode(geolocator, address: str, retries=1, delay=2) -> tuple:
     return None
 
 
-def haversine_distance(coord1, coord2):
-    """ 2点間のハーバーサイン距離を計算 """
+def haversine_distance(coord1: tuple, coord2: tuple) -> int:
+    """2点間のハーバーサイン距離を計算"""
     R = 6371.01  # 地球の平均半径 (km)
     lat1, lon1 = map(radians, coord1)
     lat2, lon2 = map(radians, coord2)
@@ -94,13 +94,14 @@ def haversine_distance(coord1, coord2):
     a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
     c = 2 * atan2(sqrt(a), sqrt(1-a))
 
-    return R * c  # km単位の距離
+    return int(R * c)
 
 
-def adjust_distance(distance):
+def adjust_distance(distance: float) -> int:
     """道路の迂回を考慮して1.3倍に補正"""
-    factor = 1.3  # 都市部なら1.2、地方なら1.3～1.5を調整
-    return distance * factor
+    factor = 1.3
+    return int(distance * factor)
+
 
 
 @app.post("/distance")
@@ -117,10 +118,5 @@ def calculate_distance(request: DistanceRequest):
     adjusted = adjust_distance(distance)
 
     return {
-        "address1": request.address1,
-        "address2": request.address2,
-        "coord1": coord1,
-        "coord2": coord2,
-        "haversine_distance_km": round(distance, 2),
-        "adjusted_distance_km": round(adjusted, 2)
+        "distance": adjusted
     }
