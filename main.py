@@ -10,6 +10,10 @@ def verify_api_key(x_api_key: str = Header(None)) -> None:
     if not x_api_key or x_api_key not in API_KEYS:
         raise HTTPException(status_code=403, detail="Authentication failed.")
 
+@app.get("/")
+def root():
+    return {"message": "ok"}
+
 
 @app.post("/distance", dependencies=[Depends(verify_api_key)])
 def calculate_distance(request: DistanceRequest):

@@ -22,6 +22,16 @@ project_root/
 
 ## APIの確認
 
+FastAPIサーバー起動
+
+```bash
+uvicorn main:app --reload
+```
+
+<http://127.0.0.1:8000>にアクセスできる
+
+### POST distance
+
 認証が必要なためヘッダーにAPIキーを含める。（テスト用は`test-api-key`）
 
 試しに「ディズニーランド」から「USJ」までの距離を求めてみる。
